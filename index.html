@@ -6,9 +6,10 @@
     <meta name="robots" content="index, follow">
     <title>Mimama Script Editor</title>
     
-    <!-- Materialize CSS -->
+    <!-- Materialize CSS para design -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-
+    
+    <!-- Estilos customizados para o layout -->
     <style>
         body {
             display: flex;
@@ -24,6 +25,8 @@
             padding: 20px;
             background-color: #f4f4f4;
             overflow-y: auto;
+            border: 2px solid #ccc;
+            margin-top: 20px;
         }
         footer {
             background-color: #263238;
@@ -88,70 +91,10 @@
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <!-- Monaco Editor -->
+    <!-- Monaco Editor (Editor de Código) -->
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs/loader.js"></script>
     <script>
-        // Inicializando o Monaco Editor
-        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs' } });
-        require(['vs/editor/editor.main'], function() {
-            const editor = monaco.editor.create(document.getElementById('editor-container'), {
-                value: `// Escreva seu código Mimama Script aqui\ninterface "MainScreen" {\n    layout: "vertical";\n    component "header" {\n        type: "Text";\n        text: "Bem-vindo ao Mimama!";\n        style: "font-size: 24px; color: #4CAF50;";\n    }\n    component "button1" {\n        type: "Button";\n        text: "Clique aqui!";\n        style: "background-color: #FFC107; padding: 15px;";\n    }\n}`,
-                language: 'javascript',
-                theme: 'vs-dark'
-            });
-
-            // Função para compilar e mostrar o resultado
-            function compileMimamaScript(code) {
-                try {
-                    // Aqui, você pode implementar a lógica de conversão do código Mimama Script em HTML/CSS/JS
-                    const parsedHTML = compileToHTML(code);
-                    document.getElementById("visual-output").innerHTML = parsedHTML;
-
-                    // Exibir notificação
-                    showNotification("Compilação realizada com sucesso!");
-                } catch (error) {
-                    document.getElementById("visual-output").innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
-                }
-            }
-                    <li><a href="#">Contato</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Conteúdo Principal -->
-    <main class="container">
-        <div class="row">
-            <!-- Editor de código -->
-            <div class="col s12 m6">
-                <div id="editor-container"></div>
-            </div>
-
-            <!-- Visualização de Resultado -->
-            <div class="col s12 m6" id="output-container">
-                <h4>Visualização do Resultado</h4>
-                <div id="visual-output"></div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Notificação -->
-    <div id="notification" class="notification">
-        Ação realizada com sucesso!
-    </div>
-
-    <!-- Rodapé -->
-    <footer>
-        <p>&copy; 2025 Mimama Script. Todos os direitos reservados.</p>
-    </footer>
-
-    <!-- Materialize JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <!-- Monaco Editor -->
-    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs/loader.js"></script>
-    <script>
-        // Inicializando o Monaco Editor
+        // Inicialização do Monaco Editor
         require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs' } });
         require(['vs/editor/editor.main'], function() {
             const editor = monaco.editor.create(document.getElementById('editor-container'), {

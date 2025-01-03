@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Mimama Script Editor</title>
+    
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #editor-container {
+            height: 400px;
+            margin-top: 20px;
+        }
+        #output-container {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+            overflow-y: auto;
+        }
+        footer {
+            background-color: #263238;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="navbar-fixed">
+        <nav class="blue-grey darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo center">Mimama Script</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <div class="row">
+            <!-- Editor de código -->
+            <div class="col s12 m6">
+                <div id="editor-container"></div>
+            </div>
+
+            <!-- Visualização de Resultado -->
+            <div class="col s12 m6" id="output-container">
+                <h4>Visualização do Resultado</h4>
+                <div id="visual-output"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification">
+        Ação realizada com sucesso!
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Mimama Script. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs/loader.js"></script>
+    <script>
+        // Inicializando o Monaco Editor
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs' } });
+        require(['vs/editor/editor.main'], function() {
+            const editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: `// Escreva seu código Mimama Script aqui\ninterface "MainScreen" {\n    layout: "vertical";\n    component "header" {\n        type: "Text";\n        text: "Bem-vindo ao Mimama!";\n        style: "font-size: 24px; color: #4CAF50;";\n    }\n    component "button1" {\n        type: "Button";\n        text: "Clique aqui!";\n        style: "background-color: #FFC107; padding: 15px;";\n    }\n}`,
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            // Função para compilar e mostrar o resultado
+            function compileMimamaScript(code) {
+                try {
+                    // Aqui, você pode implementar a lógica de conversão do código Mimama Script em HTML/CSS/JS
+                    const parsedHTML = compileToHTML(code);
+                    document.getElementById("visual-output").innerHTML = parsedHTML;
+
+                    // Exibir notificação
+                    showNotification("Compilação realizada com sucesso!");
+                } catch (error) {
+                    document.getElementById("visual-output").innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
+                }
+            }
+
+            // Função para compilar o código Mimama Script
+            function compileToHTML(code) {
+                // Exemplo simples de conversão. Implementar lógica real aqui.
+                const regex = /component "([^"]+)"/g;
+                let match;
+                let htmlOutput = "<div>";
+
+                while ((match = regex.exec(code)) !== null) {
+                    htmlOutput += `<h3>${match[1]}</h3>`;
+                }
+
+                htmlOutput += "</div>";
+                return htmlOutput;
+            }
+
+            // Exibir notificação
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.style.display = 'block';
+                setTimeout(() => notification.style.display = 'none', 3000);
+            }
+
+            // Compilar sempre que o código for alterado
+            editor.onDidChangeModelContent(function() {
+                const code = editor.getValue();
+                compileMimamaScript(code);
+            });
+
+            // Compilação inicial
+            compileMimamaScript(editor.getValue());
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Mimama Script Editor</title>
+    
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #editor-container {
+            height: 400px;
+            margin-top: 20px;
+        }
+        #output-container {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+            overflow-y: auto;
+        }
+        footer {
+            background-color: #263238;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="navbar-fixed">
+        <nav class="blue-grey darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo center">Mimama Script</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <div class="row">
+            <!-- Editor de código -->
+            <div class="col s12 m6">
+                <div id="editor-container"></div>
+            </div>
+
+            <!-- Visualização de Resultado -->
+            <div class="col s12 m6" id="output-container">
+                <h4>Visualização do Resultado</h4>
+                <div id="visual-output"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification">
+        Ação realizada com sucesso!
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Mimama Script. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs/loader.js"></script>
+    <script>
+        // Inicializando o Monaco Editor
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs' } });
+        require(['vs/editor/editor.main'], function() {
+            const editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: `// Escreva seu código Mimama Script aqui\ninterface "MainScreen" {\n    layout: "vertical";\n    component "header" {\n        type: "Text";\n        text: "Bem-vindo ao Mimama!";\n        style: "font-size: 24px; color: #4CAF50;";\n    }\n    component "button1" {\n        type: "Button";\n        text: "Clique aqui!";\n        style: "background-color: #FFC107; padding: 15px;";\n    }\n}`,
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            // Função para compilar e mostrar o resultado
+            function compileMimamaScript(code) {
+                try {
+                    // Aqui, você pode implementar a lógica de conversão do código Mimama Script em HTML/CSS/JS
+                    const parsedHTML = compileToHTML(code);
+                    document.getElementById("visual-output").innerHTML = parsedHTML;
+
+                    // Exibir notificação
+                    showNotification("Compilação realizada com sucesso!");
+                } catch (error) {
+                    document.getElementById("visual-output").innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
+                }
+            }
+
+            // Função para compilar o código Mimama Script
+            function compileToHTML(code) {
+                // Exemplo simples de conversão. Implementar lógica real aqui.
+                const regex = /component "([^"]+)"/g;
+                let match;
+                let htmlOutput = "<div>";
+
+                while ((match = regex.exec(code)) !== null) {
+                    htmlOutput += `<h3>${match[1]}</h3>`;
+                }
+
+                htmlOutput += "</div>";
+                return htmlOutput;
+            }
+
+            // Exibir notificação
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.style.display = 'block';
+                setTimeout(() => notification.style.display = 'none', 3000);
+            }
+
+            // Compilar sempre que o código for alterado
+            editor.onDidChangeModelContent(function() {
+                const code = editor.getValue();
+                compileMimamaScript(code);
+            });
+
+            // Compilação inicial
+            compileMimamaScript(editor.getValue());
+        });
+    </script>
+</body>
+</html>
